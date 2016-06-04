@@ -1,0 +1,25 @@
+{
+  "name": "lyrics-visualizer",
+  "version": "0.1.0",
+  "description": "Nice music lyrics visualizer",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "keywords": [
+    "music",
+	"lyrics",
+	"visualization",
+	"karaoke"
+  ],
+  "author": "Petru Dimitriu",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron-prebuilt": "^0.36.0",
+	"jquery" :"~2.2.0",
+	"jquery-ui": "~1.10.5"
+  }
+}

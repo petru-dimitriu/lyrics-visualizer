@@ -1,0 +1,38 @@
+16.5|flash|red
+17.420772|19.916707|A shot in the dark
+0|shs|400
+20.079233|24.361956|A past, lost in space
+24.804096|26.800844|Where do I start
+27.276813|31.58314|The past, and the chase
+32.198031|34.358303|You hunted me down
+34.705961|38.839377|Like a wolf, a predator
+39.582353|43.761593|I felt like a deer in love lights
+47.02311|53.3158|You loved me and I froze in time
+54.616008|60.814216|Hungry for that flesh of mine
+61.813588|69.115649|But I can't compete with a she wolf who has brought me to my knees
+69.533573|72.679612|What do you see in those yellow eyes
+73.561284|75.95335|Cause I'm falling to pieces
+77.439302|80.318334|I'm falling to pieces
+80.874568|83.557245|I'm falling to pieces
+84.474356|87.91062|I'm falling to pieces
+0|shs|1500
+88.315937|90.754825|Falling to pieces
+0|shs|400
+105.974224|108.435332|Did she lie in in way?
+108.678509|112.718441|Was I bait to pull you in?
+113.392375|115.77222|The thrill of the kill
+116.132099|119.857976|You feel, is a sin
+120.729263|127.752708|I lay with the wolves, alone it seems
+128.216456|132.95354|I thought I was part of you
+135.553956|142.194304|You loved me and I froze in time
+0|shs|700
+143.192678|149.589237|Hungry for that flesh of mine
+0|shs|200
+150.308995|157.471748|But I can't compete with a she wolf, who has brought me to my knees
+158.02898|161.534286|What do you see in those yellow eyes
+162.033473|164.332055|Cause I'm falling to pieces
+165.865055|169.032703|I'm falling to pieces
+169.626371|171.993995|I'm falling to pieces
+173.306424|176.510508|I'm falling to pieces
+0|shs|800
+176.928432|179.227014|Falling to pieces
