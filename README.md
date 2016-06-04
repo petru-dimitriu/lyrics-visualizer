@@ -22,4 +22,4 @@ Planned:
 * full screen mode with big impressive text
 
 # Licence
-BSD. No warranties for anythings.
+BSD. No warranties for anything.
