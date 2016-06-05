@@ -31,6 +31,8 @@ function loadSong(name)
 });
   // TO DO: Find more elegant alternative to using bind!
   rl.on('line',lp.parseLine.bind(lp));
+  lp.init();
+  displaySpeed = 100, hideSpeed = 100;
 }
 
 function LyricsEvent(time, type, text, options)
@@ -46,13 +48,17 @@ class LyricsPlayer extends EventEmitter
 	constructor()
 	{
 		super();
-		this.eventsList = [];
-		this.splitLine =  [];
 		this.startTime = 0;
 		this.currentTime = function ()
 		{
 			return Date.now() / 1000 - this.startTime;
 		}
+	}
+	
+	init()
+	{
+		this.eventsList = [];
+		this.splitLine =  [];
 	}
 
 	play() 

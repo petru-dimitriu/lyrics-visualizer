@@ -1,0 +1,80 @@
+10.139933|13.159271|﻿Everything I want I have:
+14.238908|17.721608|Money, notoriety and rivieras.
+18.498413|21.563576|I even think I found God
+22.655433|25.905342|In the flash bulbs of the pretty cameras,
+26.462574|29.678878|Pretty cameras, pretty cameras.
+30.282546|34.704964|Am I glamorous? Tell me am I glamorous?
+36.782975|38.559763|Hello? Hello?
+39.035732|40.556511|C-can you hear me?
+41.043478|42.820266|I can be your china doll
+43.063444|45.222718|If you want to see me fall.
+45.374246|47.115596|Boy, you're so dope,
+47.777309|49.320695|Your love is deadly.
+49.553486|51.48058|Tell me life is beautiful,
+51.71276|53.534375|They all think I have it all.
+0|sds|2000
+54.835581|59.432745|I've nothing without you!
+0|sds|100
+60.280202|62.079597|All my dreams and all the lights mean
+0|sds|2000
+63.054753|67.675135|Nothing without you!
+0|sds|100
+71.018527|74.478009|Summertime is nice and hot,
+75.371902|78.854602|And my life is sweet like vanilla is.
+79.573362|82.5927|Gold and silver line my heart
+83.672337|87.572961|But burned into my brain are these stolen images,
+88.130193|91.694156|Stolen images, baby, stolen images.
+92.390696|93.678684|Can you picture it,
+93.992738|97.429002|Babe, the life we could've lived?
+98.71699|100.319032|Hello? Hello?
+101.18932|102.67627|C-can you hear me?
+103.128023|104.812326|I can be your China doll
+105.090942|107.134126|If you like to see me fall.
+107.377304|108.852258|Boy, you're so dope,
+109.792587|111.255321|Your love is deadly.
+111.708072|113.216631|Tell me life is beautiful,
+113.855737|115.074682|They all think I have it all.
+0|sds|2000
+115.968575|121.308715|I've nothing without you!
+0|sds|100
+122.388352|124.373491|All my dreams and all the lights mean
+0|sds|2000
+125.093249|129.875546|Nothing without you!
+0|sds|100
+133.149895|136.272716|We were two kids, just tryin' to get out,
+136.853166|140.730572|Lived on the dark side of the American dream.
+141.171714|144.909812|We would dance all night, play our music loud,
+145.432217|149.727547|When we grew up, nothing was what it seemed.
+150.353822|151.851994|Hello? Hello?
+152.351181|154.510455|C-can you hear me?
+154.626545|156.645513|I can be your China doll
+156.911909|158.351425|If you like to see me fall.
+158.805785|160.547135|Boy, you're so dope,
+161.242677|162.694189|Your love is deadly.
+163.124333|164.7722|Tell me life is beautiful,
+165.144299|167.152045|They think that I have it all.
+0|sds|2000
+167.907241|172.783021|I've nothing without you!
+0|sds|100
+173.827831|176.486292|All my dreams and all the lights mean
+0|sds|2000
+176.903218|181.2692|Nothing without you!
+0|sds|100
+184.426848|186.121762|Hello? Hello?
+186.946001|188.350079|C-can you hear me?
+188.861486|190.521573|I can be your china doll
+191.067196|192.74989|If you like to see me fall.
+192.982681|194.944602|Boy, you're so dope,
+195.570877|196.92913|Your love is deadly.
+197.370272|199.169667|Tell me life is beautiful,
+199.541766|201.526905|They think that I have it all.
+0|sds|2000
+202.084137|206.901872|I've nothing without you!
+0|sds|100
+208.08599|210.581925|All my dreams and all the lights mean
+0|sds|2000
+211.023067|214.645075|Nothing without you!
+0|sds|100
+217.245491|219.079713|All my dreams and all the lights mean
+0|shs|3000
+219.741426|226.985442|Nothing! if I can't have you!
