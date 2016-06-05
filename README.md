@@ -4,12 +4,12 @@
 
 App which plays songs while displaying their lyrics in the lower part of the screen with fancy effects.
 
-# Installing and requisites
+## Installing and requisites
 Install with `npm install`. Run with `npm start`.
 
 Uses Electron, jquery, jquery-ui.
 
-### Animations and effects
+## Animations and effects
 Current:
 * variable fade-in / fade-out effect for individual lyrics
 * background colour flash
@@ -21,5 +21,5 @@ Planned:
 * pulsating background/text
 * full screen mode with big impressive text
 
-# Licence
+## Licence
 BSD. No warranties for anything.

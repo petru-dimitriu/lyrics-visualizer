@@ -1,0 +1,121 @@
+3.062434|flash|rand
+4.584211|flash|rand
+5.443277|flash|rand
+6.267516|flash|rand
+8.019477|flash|rand
+8.809276|flash|rand
+9.668342|flash|rand
+10.760199|flash|rand
+11.490955|flash|rand
+12.326416|flash|rand
+13.126826|flash|rand
+14.208072|flash|rand
+14.846567|flash|rand
+15.647588|flash|rand
+16.529261|flash|rand
+18.281833|flash|rand
+19.165115|flash|rand
+19.965138|flash|rand
+21.68327|flash|rand
+22.566552|flash|rand
+23.401402|flash|rand
+25.119534|flash|rand
+26.046645|flash|rand
+26.849662|flash|rand
+28.661277|flash|rand
+84.256778|blf|
+85.614033|elf|
+86.055175|blf|
+86.799149|elf|
+87.633999|blf|
+88.574328|elf|
+89.434392|blf|
+90.293458|elf|
+91.162524|blf|
+92.116071|elf|
+92.801002|blf|
+93.741331|elf|
+94.519134|blf|
+99.301431|elf|
+99.672532|blf|
+100.636079|elf|
+101.4371|blf|
+102.355209|elf|
+103.214275|blf|
+104.061121|elf|
+104.873364|blf|
+105.755648|elf|
+106.614714|blf|
+107.520603|elf|
+108.217754|blf|
+111.734283|elf|
+113.534676|blf|
+114.938367|elf|
+115.252808|blf|
+118.271148|elf|
+118.630029|blf|
+121.753848|elf|
+122.077902|blf|
+124.412309|elf|
+214.61263|blf|
+215.507134|elf|
+216.25011|blf|
+220.464177|elf|
+221.312021|blf|
+222.28679|elf|
+223.191681|blf|
+224.050747|elf|
+224.864986|blf|
+225.746272|elf|
+226.628556|blf|
+227.441186|elf|
+228.346688|blf|
+229.171314|elf|
+230.006775|blf|
+230.900668|elf|
+231.749123|blf|
+234.569499|elf|
+235.091904|blf|
+236.08928|elf|
+236.902521|blf|
+237.784805|elf|
+238.643871|blf|
+239.503935|elf|
+240.349783|blf|
+241.221069|elf|
+241.988261|blf|
+247.142657|elf|
+247.965898|blf|
+248.860789|elf|
+249.986862|blf|
+254.803599|elf|
+30.680245|34.325858|I can't believe
+37.042975|42.022238|The night lay waste to all we've given
+44.600434|48.383359|But honestly
+50.601289|55.420022|You've gotta know that this ain't living
+56.185605|62.083588|But we could run
+63.556933|68.595239|from elysium
+69.802962|76.163696|And let it burn, let it burn!
+78.254925|79.461263|You've gotta know
+79.821142|81.863715|nothing lasts
+82|shs|5000
+82.433167|86.983284|forever!
+90|shs|100
+139.73458|142.033773|I can't believe myself
+142.776138|148.535811|I never thought this would be our end
+148.872472|150.333597|But it's nothing new
+153.108759|155.930744|And my love is honesty
+156.532803|157.914885|But I can push it back,
+158.134845|161.513675|push it back down if I have to,
+162.431784|164.914501|if you want me to...!
+165.692915|172.496176|Cause we can run
+172.693142|178.75304|We can run
+179.369315|182.746536|Cause the stars they fall
+182.931669|185.208642|All for you
+186.252454|189.131486|So tell me now
+189.584237|192.150824|What's left to lose?
+192.487485|197.374263|If we run,
+199.253923|203.945568|if we run,
+206.209323|209.888378|if we run
+210|shs|5000
+212.523621|219.825682|Forever!
