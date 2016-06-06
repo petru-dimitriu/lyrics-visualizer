@@ -11,8 +11,9 @@ var dialog = remote.require('dialog');
 var displaySpeed = 100, hideSpeed = 100;
 let rl;
 let timeUpdate;
-let longFlashing = false;
+let longFlashing = false, fontFlashing = false;
 let oldBgColor = "#000";
+let oldFont = "arial";
 
 function openSong()
 {
@@ -85,7 +86,7 @@ class LyricsPlayer extends EventEmitter
 			this.eventsList = [];
 		
 		console.log(this.splitLine[1]);
-		if (['sds', 'shs', 'flash', 'blf', 'elf'].indexOf(this.splitLine[1]) >= 0)
+		if (['sds', 'shs', 'flash', 'blf', 'elf','bff','eff','belf','eelf'].indexOf(this.splitLine[1]) >= 0)
 		{
 			console.log('here');
 			this.eventsList.push(new LyricsEvent(this.splitLine[0],this.splitLine[1],this.splitLine[2]));
@@ -100,7 +101,7 @@ class LyricsPlayer extends EventEmitter
 	check()
 	{	
 		console.log(this.eventsList[this.i].time);
-		if (this.currentTime() > this.eventsList[this.i].time)
+		if ($("#music").prop('currentTime') > this.eventsList[this.i].time)
 		{
 			this.emit(this.eventsList[this.i].type,this.eventsList[this.i].text);
 			this.i++;
@@ -130,6 +131,10 @@ lp.on('shs',setHideSpeed);
 lp.on('flash',flash);
 lp.on('blf',beginLongFlash);
 lp.on('elf',endLongFlash);
+lp.on('bff',beginFontFlash);
+lp.on('eff',endFontFlash);
+lp.on('belf',function(){beginFontFlash(); beginLongFlash();});
+lp.on('eelf',function(){endFontFlash(); endLongFlash(); });
 
 function displayLyric(text)
 {
@@ -178,13 +183,35 @@ function beginLongFlash()
 {
 	longFlashing = true;
 	oldBgColor = $("body").css('backgroundColor');
-	console.log('blt');
 	setTimeout(longFlash,50);
 }
 
 function endLongFlash()
 {
 	longFlashing = false;
+}
+
+function fontFlash()
+{
+	if (fontFlashing == false)
+	{
+		$("#currentLyric").css('fontFamily',oldFont);
+		return;
+	}
+	$("#currentLyric").css('fontFamily',getRandomFont());
+	setTimeout(fontFlash,50);
+}
+
+function beginFontFlash()
+{
+	fontFlashing = true;
+	oldFont = $("#currentLyric").css('fontFamily');
+	setTimeout(fontFlash,50);
+}
+
+function endFontFlash()
+{
+	fontFlashing = false;
 }
 
 function updateTime()
@@ -204,4 +231,9 @@ function getRandomColor() {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+}
+
+function getRandomFont(){
+	var fonts = ['arial', 'tahoma', 'comic sans', 'courier new', 'trebuchet','serif','times new roman'];
+	return fonts[Math.floor(Math.random()*7)];
 }

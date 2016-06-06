@@ -34,13 +34,13 @@
 109.792587|111.255321|Your love is deadly.
 111.708072|113.216631|Tell me life is beautiful,
 113.855737|115.074682|They all think I have it all.
-0|sds|2000
+114|sds|2000
 115.968575|121.308715|I've nothing without you!
-0|sds|100
+120|sds|100
 122.388352|124.373491|All my dreams and all the lights mean
-0|sds|2000
+124|sds|2000
 125.093249|129.875546|Nothing without you!
-0|sds|100
+130|sds|100
 133.149895|136.272716|We were two kids, just tryin' to get out,
 136.853166|140.730572|Lived on the dark side of the American dream.
 141.171714|144.909812|We would dance all night, play our music loud,
@@ -53,13 +53,13 @@
 161.242677|162.694189|Your love is deadly.
 163.124333|164.7722|Tell me life is beautiful,
 165.144299|167.152045|They think that I have it all.
-0|sds|2000
+166|sds|2000
 167.907241|172.783021|I've nothing without you!
-0|sds|100
+171|sds|100
 173.827831|176.486292|All my dreams and all the lights mean
-0|sds|2000
+175|sds|2000
 176.903218|181.2692|Nothing without you!
-0|sds|100
+180|sds|100
 184.426848|186.121762|Hello? Hello?
 186.946001|188.350079|C-can you hear me?
 188.861486|190.521573|I can be your china doll
@@ -68,13 +68,13 @@
 195.570877|196.92913|Your love is deadly.
 197.370272|199.169667|Tell me life is beautiful,
 199.541766|201.526905|They think that I have it all.
-0|sds|2000
+201|sds|2000
 202.084137|206.901872|I've nothing without you!
-0|sds|100
+205|sds|100
 208.08599|210.581925|All my dreams and all the lights mean
-0|sds|2000
+209|sds|2000
 211.023067|214.645075|Nothing without you!
-0|sds|100
+212|sds|100
 217.245491|219.079713|All my dreams and all the lights mean
-0|shs|3000
+218|shs|3000
 219.741426|226.985442|Nothing! if I can't have you!
