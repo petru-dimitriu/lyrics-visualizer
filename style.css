@@ -8,7 +8,7 @@ p, h1, h2, h3, h4
 
 p
 {
-    font-size:30px;
+    
 }
 
 body
@@ -27,6 +27,7 @@ a
 
 #currentLyric
 {
+	font-size:30px;
 	position:absolute;
 	bottom:0px;
 	width: 100%;
@@ -36,4 +37,15 @@ a
 #controls
 {
 	z-index:10;
+}
+
+@media screen and (min-width:200px) and (min-height:200px)
+{
+	#currentLyric
+	{
+		top: 30vh;
+		width: 100%;
+		text-align: center;
+		font-size:20vh;
+	}
 }

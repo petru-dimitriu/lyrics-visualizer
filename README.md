@@ -13,13 +13,14 @@ Uses Electron, jquery, jquery-ui.
 Current:
 * variable fade-in / fade-out effect for individual lyrics
 * background colour flash
+* background colour explosion
+* full screen mode
 
 Planned:
 * variable text family/size/colour
 * zoom in / zoom out effect
 * fading background pictures
 * pulsating background/text
-* full screen mode with big impressive text
 
 ## Licence
 BSD. No warranties for anything.
