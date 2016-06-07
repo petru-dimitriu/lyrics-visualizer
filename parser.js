@@ -140,8 +140,6 @@ lp.on('bff',beginFontFlash);
 lp.on('eff',endFontFlash);
 lp.on('belf',function(){beginFontFlash(); beginLongFlash();});
 lp.on('eelf',function(){endFontFlash(); endLongFlash(); });
-$("body").on('mouseover',function(){console.log("over"); $("#titlebar").animate({opacity:0},100);});
-$("body").on('mouseout',function(){console.log("out"); $("#titlebar").animate({opacity:1},100);});
 
 function displayLyric(text)
 {
