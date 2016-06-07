@@ -49,3 +49,10 @@ a
 		font-size:15vh;
 	}
 }
+
+#titlebar
+{
+	height:20px;
+	overflow:hidden;
+	text-align:center;
+}

@@ -3,11 +3,19 @@
   <meta charset = "UTF-8">
   <link rel="stylesheet" href="style.css"></style>
   <script src="parser.js"></script>
+  <script>
+  function initPage()
+  {
+	  $("body").on('mouseleave',function(){console.log("over"); $("#titlebar").animate({opacity:0},100);});	
+	  $("body").on('mouseenter',function(){console.log("out"); $("#titlebar").animate({opacity:1},100);});
+  }
+  </script>
 </head>
-<body>
+<body onload="initPage()">
   <audio id = "music">
   Error loading audio!
   </audio>
+  <p id="titlebar" style="font-size:90%;">Lyrics Visualizer</p>
   <p id="currentLyric"></p>
   <div id="controls">
   <a href="javascript:openSong();">Open</a>

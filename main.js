@@ -12,7 +12,7 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 100});
+  mainWindow = new BrowserWindow({width: 800, height: 100, frame: true	});
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
@@ -25,6 +25,7 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
 }
 
 // This method will be called when Electron has finished

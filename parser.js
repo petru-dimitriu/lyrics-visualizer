@@ -14,6 +14,7 @@ let timeUpdate;
 let longFlashing = false, fontFlashing = false;
 let oldBgColor = "#000";
 let oldFont = "arial";
+let loadedSongName;
 
 function openSong()
 {
@@ -29,6 +30,9 @@ function openSong()
 function loadSong(name)
 {
 	document.getElementById('music').src = name;
+	var start = name.lastIndexOf('\\')+1;
+	var stop = name.lastIndexOf('.mp3');
+	loadedSongName = name.substr(start,stop);
   rl = readline.createInterface({
   input: fs.createReadStream (name.substr(0,name.lastIndexOf('.mp3'))+'.srt',{encoding: "utf8"})
 });
@@ -67,7 +71,8 @@ class LyricsPlayer extends EventEmitter
 
 	play() 
 	{
-	  document.getElementById('music').play();
+	  $("#music").trigger('play');
+	  $("#titlebar").html(loadedSongName);
 	  this.startTime = Date.now() / 1000;
 	  this.i = 0;
 	  var thisObj = this;
@@ -135,6 +140,8 @@ lp.on('bff',beginFontFlash);
 lp.on('eff',endFontFlash);
 lp.on('belf',function(){beginFontFlash(); beginLongFlash();});
 lp.on('eelf',function(){endFontFlash(); endLongFlash(); });
+$("body").on('mouseover',function(){console.log("over"); $("#titlebar").animate({opacity:0},100);});
+$("body").on('mouseout',function(){console.log("out"); $("#titlebar").animate({opacity:1},100);});
 
 function displayLyric(text)
 {
