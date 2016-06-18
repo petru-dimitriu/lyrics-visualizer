@@ -16,13 +16,16 @@ Current:
 * background colour 'explosion'
 * font colour 'explosion'
 * full screen mode
+* pulsating background/text
 
 Planned:
 * more flexible text family/size/colour
 * zoom in / zoom out effect
 * fading background pictures
-* pulsating background/text
 * animation directly linked to song beats, frequency, etc
+
+## Screen capture
+![Capture](https://raw.githubusercontent.com/petru-dimitriu/lyrics-visualizer/master/capture.gif)
 
 ## Licence
 BSD. No warranties for anything.

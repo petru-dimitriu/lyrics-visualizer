@@ -34,11 +34,6 @@ a
 	text-align: center;
 }
 
-#controls
-{
-	z-index:10;
-}
-
 @media screen and (min-width:200px) and (min-height:200px)
 {
 	#currentLyric
@@ -52,7 +47,30 @@ a
 
 #titlebar
 {
+	top: 0;
 	height:20px;
 	overflow:hidden;
 	text-align:center;
+}
+
+#controlsbar
+{
+	z-index:10;
+	position:absolute;
+	font-weight:bold;
+	font-size:13px;
+	top:0px;
+	text-transform:uppercase;
+}
+
+.upperbar
+{
+}
+
+#time
+{
+	position:absolute;
+	top:0px;
+	right:0px;
+	float:right;
 }

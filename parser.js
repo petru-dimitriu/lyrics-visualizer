@@ -239,6 +239,6 @@ function getRandomColor() {
 }
 
 function getRandomFont(){
-	var fonts = ['arial', 'tahoma', 'comic sans', 'courier new', 'trebuchet','serif','times new roman'];
+	var fonts = ['arial', 'tahoma', 'comic sans', 'courier new', 'impact','serif','lucida console','gentium'];
 	return fonts[Math.floor(Math.random()*7)];
 }
