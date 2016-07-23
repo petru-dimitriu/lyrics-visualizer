@@ -16,8 +16,7 @@ let oldBgColor = "#000";
 let oldFont = "arial";
 let loadedSongName;
 
-function openSong()
-{
+function openSong() {
 	dialog.showOpenDialog(
 		function(fileNames)
 		{
@@ -27,8 +26,20 @@ function openSong()
 		});
 }
 
-function loadSong(name)
-{
+function playSong(){
+	if (lp.playing){
+		lp.pause();
+		lp.playing = false;
+		$('#playButton').html('Play');
+	}
+	else {
+		lp.play();
+		lp.playing = true;
+		$('#playButton').html('Pause');
+	}
+}
+
+function loadSong(name) {
 	document.getElementById('music').src = name;
 	var start = name.lastIndexOf('\\')+1;
 	var stop = name.lastIndexOf('.mp3');
@@ -43,8 +54,7 @@ function loadSong(name)
   displaySpeed = 100, hideSpeed = 100;
 }
 
-function LyricsEvent(time, type, text, options)
-{
+function LyricsEvent(time, type, text, options) {
 	this.time = time;
 	this.type = type;
 	this.text = text;
@@ -65,6 +75,7 @@ class LyricsPlayer extends EventEmitter
 	
 	init()
 	{
+		this.playing = false;
 		this.eventsList = [];
 		this.splitLine =  [];
 	}
@@ -82,6 +93,11 @@ class LyricsPlayer extends EventEmitter
 	  timeUpdate = setInterval(updateTime,500);
 	  displaySpeed = 100, hideSpeed = 100;
 	}
+	
+	pause()
+	{
+		$("#music").trigger('pause');
+	}
 
 	parseLine(line)
 	{
@@ -91,13 +107,10 @@ class LyricsPlayer extends EventEmitter
 			this.eventsList = [];
 		
 		console.log(this.splitLine[1]);
-		if (['sds', 'shs', 'flash', 'blf', 'elf','bff','eff','belf','eelf'].indexOf(this.splitLine[1]) >= 0)
-		{
-			console.log('here');
+		if (['sds', 'shs', 'flash', 'blf', 'elf','bff','eff','belf','eelf','chl'].indexOf(this.splitLine[1]) >= 0){
 			this.eventsList.push(new LyricsEvent(this.splitLine[0],this.splitLine[1],this.splitLine[2]));
 		}
-		else
-		{
+		else{
 			this.eventsList.push(new LyricsEvent(this.splitLine[0],'display',this.splitLine[2]));
 			this.eventsList.push(new LyricsEvent(this.splitLine[1],'hide'));
 		}
@@ -140,30 +153,41 @@ lp.on('bff',beginFontFlash);
 lp.on('eff',endFontFlash);
 lp.on('belf',function(){beginFontFlash(); beginLongFlash();});
 lp.on('eelf',function(){endFontFlash(); endLongFlash(); });
+lp.on('chl',changeLyric);
 
-function displayLyric(text)
-{
-	document.getElementById('currentLyric').innerHTML = text;
+function changeLyric(text){
+	if (text == '')
+		hideLyric();
+	else if ($("#currentLyric").html() == '')
+		displayLyric(text);
+	else {
+		$("#currentLyric").animate({opacity:0},100,
+			function(){
+				$('#currentLyric').html(text);
+				$("#currentLyric").animate({opacity:1},100);
+			});
+	}
+		
+}
+
+function displayLyric(text){
+	$('#currentLyric').html(text);
 	$("#currentLyric").animate({opacity:1},displaySpeed);
 }
 
-function hideLyric(text)
-{
+function hideLyric(text){
 	$("#currentLyric").animate({opacity:0},hideSpeed);
 }
 
-function setDisplaySpeed(speed)
-{
+function setDisplaySpeed(speed){
 	displaySpeed = parseInt(speed);
 }
 
-function setHideSpeed(speed)
-{
+function setHideSpeed(speed){
 	hideSpeed = parseInt(speed);
 }
 
-function flash(color)
-{
+function flash(color){
 	var oldColor = $("body").css('backgroundColor');
 	if (color == 'rand'){
 		color = getRandomColor();
@@ -173,10 +197,8 @@ function flash(color)
 	});
 }
 
-function longFlash()
-{
-	if (longFlashing == false)
-	{
+function longFlash(){
+	if (longFlashing == false) {
 		$("body").css('backgroundColor',oldBgColor);
 		return;
 	}
@@ -184,20 +206,17 @@ function longFlash()
 	setTimeout(longFlash,50);
 }
 
-function beginLongFlash()
-{
+function beginLongFlash(){
 	longFlashing = true;
 	oldBgColor = $("body").css('backgroundColor');
 	setTimeout(longFlash,50);
 }
 
-function endLongFlash()
-{
+function endLongFlash(){
 	longFlashing = false;
 }
 
-function fontFlash()
-{
+function fontFlash(){
 	if (fontFlashing == false)
 	{
 		$("#currentLyric").css('fontFamily',oldFont);
@@ -207,20 +226,17 @@ function fontFlash()
 	setTimeout(fontFlash,50);
 }
 
-function beginFontFlash()
-{
+function beginFontFlash(){
 	fontFlashing = true;
-	oldFont = $("#currentLyric").css('fontFamily');
+	//oldFont = $("#currentLyric").css('fontFamily');
 	setTimeout(fontFlash,50);
 }
 
-function endFontFlash()
-{
+function endFontFlash(){
 	fontFlashing = false;
 }
 
-function updateTime()
-{
+function updateTime(){
 	if ($("#music").prop("ended") == true)
 		clearInterval(timeUpdate);
 	var time = $("#music").prop("currentTime");

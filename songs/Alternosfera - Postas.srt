@@ -1,0 +1,76 @@
+﻿10|shs|700
+15.922213|chl|Nimeni nu mă caută, să ştii
+18.801245|chl|Chiar şi tu la mine nu mai vii
+21.726102|chl|Diagnoza noastră –
+23.526494|chl|amnezii
+25.058496|chl|
+27.763779|chl|Poate tu nu ai observat
+30.282546|chl|Timpul ca nisipul s-a spălat
+33.5805|chl|Nu lăsa uitat tot ce-ai uitat
+36.864238|chl|
+39.604959|chl|În scrisoarea mea din poezii
+42.124112|chl|Vei citi că viu sunt printre vii
+45.514552|chl|Încă nume-n piatră
+47.196859|chl|n-am purtat
+48.775683|chl|
+51.457362|chl|Rătăcind tăceri îmi e pe plac
+54.255131|chl|Să privesc la cer neîncetat
+57.239642|chl|Când soarele-noptează
+59.003598|chl|merg în pat
+60.720733|chl|
+63.334367|chl|Ies în stradă, calc noaptea
+65.899956|chl|Din mâini scrisorile-mi cad
+69.092431|chl|În pumni am degete strânse
+71.77411|chl|În toate uşile bat
+74.67636|chl|Deschideţi poarta!
+76.65989|chl|Poştaşul de voi n-a uitat!
+80.201632|chl|Eu îţi caut fereastra
+83.719159|chl|în care m-ai aşteptat
+89.791278|chl|
+90.313683|chl|În care m-ai așteptat!
+95.072375|chl|
+96.256493|chl|De tine n-am uitat!
+100.237769|chl|
+102.212908|chl|De tine n-am uitat!
+107.495003|chl|
+134.427883|chl|Nimeni nu mă caută, să ştii
+137.375957|chl|Chiar şi tu la mine nu mai vii
+140.290428|chl|Diagnoza noastră –
+141.995342|chl|amnezii
+143.656426|chl|
+146.268065|chl|Pe covorul meu verde crustat
+149.089052|chl|A rămas un scaun și un pat
+152.10839|chl|Un perete spart
+153.512081|chl|de-un geam uitat
+155.451782|chl|
+158.14507|chl|În scrisoarea mea din poezii
+160.315341|chl|Vei citi că viu sunt printre vii
+164.030833|chl|Încă nume-n piatră
+165.667702|chl|n-am purtat
+167.246526|chl|Rătăcind tăceri îmi e pe plac
+172.887502|chl|Să privesc la cer neîncetat
+175.789752|chl|Când soarele-noptează
+177.706235|chl|merg în pat
+181.652683|chl|Ies în stradă, calc noaptea
+184.369801|chl|Din mâini scrisorile-mi cad
+187.585494|chl|În pumni am degete strânse
+190.521573|chl|În toate uşile bat
+193.227468|chl|Deschideţi poarta!
+195.166171|chl|Poştaşul de voi n-a uitat!
+199.541766|chl|Eu îţi caut fereastra
+202.304708|chl|în care m-ai aşteptat
+208.145033|chl|
+208.945056|chl|În care m-ai așteptat!
+214.087232|chl|
+214.807987|chl|De tine n-am uitat!
+219.741426|chl|
+220.983589|chl|De tine n-am uitat!
+225.686232|chl|
+252.943166|chl|Ies în stradă, calc noaptea
+255.485923|chl|Din mâini scrisorile-mi cad
+258.70123|chl|În pumni am degete strânse
+261.383907|chl|În toate uşile bat
+264.285545|chl|Deschideţi poarta!
+266.282905|chl|Poştaşul de voi n-a uitat!
+270.484751|chl|Eu îţi caut fereastra
+273.341177|chl|în care m-ai aşteptat.
