@@ -74,3 +74,14 @@ a
 	right:0px;
 	float:right;
 }
+
+.slider-background {
+	background-color: gray;
+    height: 20px;
+}
+
+.slider-inside {
+	background-color: blue;
+    height: 20px;
+    width: 0px;
+}

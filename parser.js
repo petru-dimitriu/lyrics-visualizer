@@ -3,15 +3,20 @@
 const fs = require('fs');
 const readline = require('readline');
 const EventEmitter = require('events');
-require('jquery-ui');
 window.$ = window.jQuery = require('jquery');
+require('jquery-ui');
+
+require('bootstrap');
+let bootstrapSlider = require('bootstrap-slider');
+
 var remote = require('remote');
 var dialog = remote.require('dialog');
 
 var displaySpeed = 100, hideSpeed = 100;
 let rl;
 let timeUpdate;
-let longFlashing = false, fontFlashing = false;
+let longFlashing = false,
+	fontFlashing = false;
 let oldBgColor = "#000";
 let oldFont = "arial";
 let loadedSongName;
@@ -78,6 +83,9 @@ class LyricsPlayer extends EventEmitter
 		this.playing = false;
 		this.eventsList = [];
 		this.splitLine =  [];
+    	slider = new Slider();
+    	slider.init("#slider",$("#music").prop('duration'));
+
 	}
 
 	play() 
@@ -118,7 +126,7 @@ class LyricsPlayer extends EventEmitter
 
 	check()
 	{	
-		console.log(this.eventsList[this.i].time);
+		console.log(this.i);
 		if ($("#music").prop('currentTime') > this.eventsList[this.i].time)
 		{
 			this.emit(this.eventsList[this.i].type,this.eventsList[this.i].text);
@@ -138,7 +146,6 @@ class LyricsPlayer extends EventEmitter
 			return (a.time - b.time);
 		});
 	}
-
 }
 
 var lp = new LyricsPlayer();
@@ -228,7 +235,6 @@ function fontFlash(){
 
 function beginFontFlash(){
 	fontFlashing = true;
-	//oldFont = $("#currentLyric").css('fontFamily');
 	setTimeout(fontFlash,50);
 }
 
@@ -240,9 +246,11 @@ function updateTime(){
 	if ($("#music").prop("ended") == true)
 		clearInterval(timeUpdate);
 	var time = $("#music").prop("currentTime");
+	var total = $("#music").prop("duration");
 	var mins = Math.floor(time / 60);
 	var secs = Math.floor(time % 60);
 	$("#time").html((mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs);
+	slider.setValue(time,total);
 }
 
 function getRandomColor() {
