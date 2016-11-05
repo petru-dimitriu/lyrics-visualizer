@@ -1,3 +1,6 @@
 *.mp3
 node_modules/
 *.txt
+*~
+*.srt
+playlist.html

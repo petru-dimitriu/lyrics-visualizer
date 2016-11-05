@@ -2,13 +2,17 @@
 
 const electron = require('electron');
 // Module to control application life.
+const {ipcMain} = require('electron');
+
+const fs = require('fs');
+
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let mainWindow, mainWindow2, playlistWindow;
 
 function createWindow () {
   // Create the browser window.
@@ -16,7 +20,6 @@ function createWindow () {
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
-  mainWindow.setAlwaysOnTop(true);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -25,6 +28,12 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  
+ipcMain.on('loadedSong', (event, arg) => {
+  arg = arg.substr(0,arg.lastIndexOf('/'));
+  createPlaylistWindow(arg);
+});
 
 }
 
@@ -47,4 +56,24 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
   }
+    
 });
+
+function createPlaylistWindow (arg) {
+    playlistWindow = new BrowserWindow({width: 500, height: 500, parent: mainWindow});
+    var list = fs.readdirSync(arg);
+    var playListHtmlContent = "<!DOCTYPE html>\n<html>\n<header><meta charset = 'UTF-8'>\n<link rel='stylesheet' href='style.css'></header>\n<script>\nvar remote = require('remote');\n</script>\n<body>\n<ul>";
+
+    playListHtmlContent += "<h3>Title</h3>";
+    for (var i = 0; i<list.length; i++) {
+        if (list[i].lastIndexOf('.mp3') >= 0)
+            playListHtmlContent += '<li>' + list[i] + '</li>\n';
+    }
+    playListHtmlContent += "</ul></body></html>";
+    fs.writeFileSync(__dirname + "/playlist.html",playListHtmlContent);
+    playlistWindow.loadURL('file://' + __dirname + '/playlist.html');
+    playlistWindow.on('closed', function() {
+    playlistWindow = null;
+  });
+}
+

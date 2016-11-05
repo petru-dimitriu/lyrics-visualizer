@@ -1,19 +1,20 @@
 'use strict';
 
+// REQUIRES
+
 const fs = require('fs');
 const readline = require('readline');
 const EventEmitter = require('events');
+const {ipcRenderer} = require('electron')
 window.$ = window.jQuery = require('jquery');
 require('jquery-ui');
-
 require('bootstrap');
 let bootstrapSlider = require('bootstrap-slider');
-
 var remote = require('remote');
 var dialog = remote.require('dialog');
 
 var displaySpeed = 100, hideSpeed = 100;
-let rl;
+let lineRead;
 let timeUpdate;
 let longFlashing = false,
 	fontFlashing = false;
@@ -21,41 +22,47 @@ let oldBgColor = "#000";
 let oldFont = "arial";
 let loadedSongName;
 
-function openSong() {
+function displayLoadSongDialog(defaultPath) {
 	dialog.showOpenDialog(
+		null, 
+		{ 
+			'defaultPath' : defaultPath
+		},
 		function(fileNames)
 		{
 			if (typeof fileNames === 'undefined')
 				return;
 			loadSong(fileNames[0]);
-		});
+		}
+	);
 }
 
 function playSong(){
-	if (lp.playing){
-		lp.pause();
-		lp.playing = false;
+	if (lyricsPlayer.playing){
+		lyricsPlayer.pause();
+		lyricsPlayer.playing = false;
 		$('#playButton').html('Play');
 	}
 	else {
-		lp.play();
-		lp.playing = true;
+		lyricsPlayer.play();
+		lyricsPlayer.playing = true;
 		$('#playButton').html('Pause');
 	}
 }
 
 function loadSong(name) {
 	document.getElementById('music').src = name;
+	ipcRenderer.sendSync('loadedSong',name);
 	var start = name.lastIndexOf('\\')+1;
 	var stop = name.lastIndexOf('.mp3');
 	loadedSongName = name.substr(start,stop);
-  rl = readline.createInterface({
+  lineRead = readline.createInterface({
   input: fs.createReadStream (name.substr(0,name.lastIndexOf('.mp3'))+'.srt',{encoding: "utf8"})
 });
   // TO DO: Find more elegant alternative to using bind!
-  rl.on('line',lp.parseLine.bind(lp));
-  rl.on('close',lp.sortEvents.bind(lp));
-  lp.init();
+  lineRead.on('line',lyricsPlayer.parseLine.bind(lyricsPlayer));
+  lineRead.on('close',lyricsPlayer.sortEvents.bind(lyricsPlayer));
+  lyricsPlayer.init();
   displaySpeed = 100, hideSpeed = 100;
 }
 
@@ -148,19 +155,19 @@ class LyricsPlayer extends EventEmitter
 	}
 }
 
-var lp = new LyricsPlayer();
-lp.on('display',displayLyric);
-lp.on('hide',hideLyric);
-lp.on('sds',setDisplaySpeed);
-lp.on('shs',setHideSpeed);
-lp.on('flash',flash);
-lp.on('blf',beginLongFlash);
-lp.on('elf',endLongFlash);
-lp.on('bff',beginFontFlash);
-lp.on('eff',endFontFlash);
-lp.on('belf',function(){beginFontFlash(); beginLongFlash();});
-lp.on('eelf',function(){endFontFlash(); endLongFlash(); });
-lp.on('chl',changeLyric);
+var lyricsPlayer = new LyricsPlayer();
+lyricsPlayer.on('display',displayLyric);
+lyricsPlayer.on('hide',hideLyric);
+lyricsPlayer.on('sds',setDisplaySpeed);
+lyricsPlayer.on('shs',setHideSpeed);
+lyricsPlayer.on('flash',flash);
+lyricsPlayer.on('blf',beginLongFlash);
+lyricsPlayer.on('elf',endLongFlash);
+lyricsPlayer.on('bff',beginFontFlash);
+lyricsPlayer.on('eff',endFontFlash);
+lyricsPlayer.on('belf',function(){beginFontFlash(); beginLongFlash();});
+lyricsPlayer.on('eelf',function(){endFontFlash(); endLongFlash(); });
+lyricsPlayer.on('chl',changeLyric);
 
 function changeLyric(text){
 	if (text == '')
