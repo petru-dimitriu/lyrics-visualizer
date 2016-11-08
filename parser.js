@@ -52,18 +52,18 @@ function playSong(){
 
 function loadSong(name) {
 	document.getElementById('music').src = name;
-	ipcRenderer.sendSync('loadedSong',name);
+	ipcRenderer.send('loadedSong',name);
 	var start = name.lastIndexOf('\\')+1;
 	var stop = name.lastIndexOf('.mp3');
 	loadedSongName = name.substr(start,stop);
-  lineRead = readline.createInterface({
-  input: fs.createReadStream (name.substr(0,name.lastIndexOf('.mp3'))+'.srt',{encoding: "utf8"})
-});
-  // TO DO: Find more elegant alternative to using bind!
-  lineRead.on('line',lyricsPlayer.parseLine.bind(lyricsPlayer));
-  lineRead.on('close',lyricsPlayer.sortEvents.bind(lyricsPlayer));
-  lyricsPlayer.init();
-  displaySpeed = 100, hideSpeed = 100;
+	lineRead = readline.createInterface({
+ 			 input: fs.createReadStream (name.substr(0,name.lastIndexOf('.mp3'))+'.srt',{encoding: "utf8"})
+	});
+  	// TO DO: Find more elegant alternative to using bind!
+	lineRead.on('line',lyricsPlayer.parseLine.bind(lyricsPlayer));
+  	lineRead.on('close',lyricsPlayer.sortEvents.bind(lyricsPlayer));
+  	lyricsPlayer.init();
+  	displaySpeed = 100, hideSpeed = 100;
 }
 
 function LyricsEvent(time, type, text, options) {
@@ -168,6 +168,12 @@ lyricsPlayer.on('eff',endFontFlash);
 lyricsPlayer.on('belf',function(){beginFontFlash(); beginLongFlash();});
 lyricsPlayer.on('eelf',function(){endFontFlash(); endLongFlash(); });
 lyricsPlayer.on('chl',changeLyric);
+
+ipcRenderer.on('loadSong', function(evt,songName) {
+	loadSong(songName);
+	lyricsPlayer.pause();
+	lyricsPlayer.play();
+	});
 
 function changeLyric(text){
 	if (text == '')

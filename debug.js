@@ -27,13 +27,24 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+
   });
 
+  playlistWindow = new BrowserWindow({width: 500, height: 500, parent: mainWindow, visible: false});
+  var playListHtmlContent = "<!DOCTYPE html>\n<html>\n<header><meta charset = 'UTF-8'>\n<link rel='stylesheet' href='style.css'></header>\n<script>\nvar remote = require('remote');\n</script>\n<body>\n";
+  playListHtmlContent += "<h3>Playlist</h3><ul></ul>";
+  playListHtmlContent += "<script src='playlist.js'></script>" + "</body></html>";
+  fs.writeFileSync(__dirname + "/playlist.html",playListHtmlContent);
+  playlistWindow.loadURL('file://' + __dirname + '/playlist.html');
   
-ipcMain.on('loadedSong', (event, arg) => {
-  arg = arg.substr(0,arg.lastIndexOf('/'));
-  createPlaylistWindow(arg);
-});
+  ipcMain.on('loadedSong', (event, arg) => {
+      arg = arg.substr(0,arg.lastIndexOf('/'));
+      createPlaylistWindow(arg);
+  });
+
+  ipcMain.on('loadSongFromPlaylist', (event, arg) => {
+      mainWindow.webContents.send('loadSong',arg.toString());
+  });
 
 }
 
@@ -60,20 +71,17 @@ app.on('activate', function () {
 });
 
 function createPlaylistWindow (arg) {
-    playlistWindow = new BrowserWindow({width: 500, height: 500, parent: mainWindow});
+    
     var list = fs.readdirSync(arg);
-    var playListHtmlContent = "<!DOCTYPE html>\n<html>\n<header><meta charset = 'UTF-8'>\n<link rel='stylesheet' href='style.css'></header>\n<script>\nvar remote = require('remote');\n</script>\n<body>\n<ul>";
 
-    playListHtmlContent += "<h3>Title</h3>";
+    var listContent = "";
     for (var i = 0; i<list.length; i++) {
         if (list[i].lastIndexOf('.mp3') >= 0)
-            playListHtmlContent += '<li>' + list[i] + '</li>\n';
+            listContent += '<li>' + list[i] + '</li>\n';
     }
-    playListHtmlContent += "</ul></body></html>";
-    fs.writeFileSync(__dirname + "/playlist.html",playListHtmlContent);
-    playlistWindow.loadURL('file://' + __dirname + '/playlist.html');
-    playlistWindow.on('closed', function() {
-    playlistWindow = null;
-  });
+    
+    playlistWindow.webContents.send('setList',listContent);
+    playlistWindow.webContents.send('setTitle',arg);
+    playlistWindow.show();
 }
 
