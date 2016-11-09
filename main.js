@@ -2,21 +2,24 @@
 
 const electron = require('electron');
 // Module to control application life.
+const {ipcMain} = require('electron');
+
+const fs = require('fs');
+
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let mainWindow, mainWindow2, playlistWindow, currentSongName;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 100, frame: false	});
+  mainWindow = new BrowserWindow({width: 800, height: 100, frame: false});
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
-  mainWindow.setAlwaysOnTop(true);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -24,6 +27,25 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+    playlistWindow = null;
+
+  });
+
+  playlistWindow = new BrowserWindow({width: 400, height: 300, parent: mainWindow, visible: false, frame: false});
+  var playListHtmlContent = "<!DOCTYPE html>\n<html>\n<header><meta charset = 'UTF-8'>\n<link rel='stylesheet' href='style.css'></header>\n<script>\nvar remote = require('remote');\n</script>\n<body>\n";
+  playListHtmlContent += "<h3>Playlist</h3><ul></ul>";
+  playListHtmlContent += "<script src='playlist.js'></script>" + "</body></html>";
+  fs.writeFileSync(__dirname + "/playlist.html",playListHtmlContent);
+  playlistWindow.loadURL('file://' + __dirname + '/playlist.html');
+  
+  ipcMain.on('loadedSong', (event, arg) => {
+      var path = arg.substr(0,arg.lastIndexOf('/'));
+      currentSongName = arg.substr(arg.lastIndexOf('/')+1);
+      createPlaylistWindow(path);
+  });
+
+  ipcMain.on('loadSongFromPlaylist', (event, arg) => {
+      mainWindow.webContents.send('loadSong',arg.toString());
   });
 
 }
@@ -47,4 +69,25 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
   }
+    
 });
+
+function createPlaylistWindow (arg) {
+    
+    var list = fs.readdirSync(arg);
+
+    var listContent = "";
+    for (var i = 0; i<list.length; i++) {
+        if (list[i].lastIndexOf('.mp3') >= 0) {
+            if (list[i].indexOf(currentSongName) != -1)
+                listContent += '<li class="playing">' + list[i] + '</li>\n';
+            else
+                listContent += '<li>' + list[i] + '</li>\n';
+        }
+    }
+    
+    playlistWindow.webContents.send('setList',listContent);
+    playlistWindow.webContents.send('setTitle',arg);
+    playlistWindow.show();
+}
+

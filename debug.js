@@ -12,7 +12,7 @@ const BrowserWindow = electron.BrowserWindow;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow, mainWindow2, playlistWindow;
+let mainWindow, mainWindow2, playlistWindow, currentSongName;
 
 function createWindow () {
   // Create the browser window.
@@ -27,10 +27,11 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+    playlistWindow = null;
 
   });
 
-  playlistWindow = new BrowserWindow({width: 500, height: 500, parent: mainWindow, visible: false});
+  playlistWindow = new BrowserWindow({width: 400, height: 300, parent: mainWindow, visible: false});
   var playListHtmlContent = "<!DOCTYPE html>\n<html>\n<header><meta charset = 'UTF-8'>\n<link rel='stylesheet' href='style.css'></header>\n<script>\nvar remote = require('remote');\n</script>\n<body>\n";
   playListHtmlContent += "<h3>Playlist</h3><ul></ul>";
   playListHtmlContent += "<script src='playlist.js'></script>" + "</body></html>";
@@ -38,8 +39,9 @@ function createWindow () {
   playlistWindow.loadURL('file://' + __dirname + '/playlist.html');
   
   ipcMain.on('loadedSong', (event, arg) => {
-      arg = arg.substr(0,arg.lastIndexOf('/'));
-      createPlaylistWindow(arg);
+      var path = arg.substr(0,arg.lastIndexOf('/'));
+      currentSongName = arg.substr(arg.lastIndexOf('/')+1);
+      createPlaylistWindow(path);
   });
 
   ipcMain.on('loadSongFromPlaylist', (event, arg) => {
@@ -76,8 +78,12 @@ function createPlaylistWindow (arg) {
 
     var listContent = "";
     for (var i = 0; i<list.length; i++) {
-        if (list[i].lastIndexOf('.mp3') >= 0)
-            listContent += '<li>' + list[i] + '</li>\n';
+        if (list[i].lastIndexOf('.mp3') >= 0) {
+            if (list[i].indexOf(currentSongName) != -1)
+                listContent += '<li class="playing">' + list[i] + '</li>\n';
+            else
+                listContent += '<li>' + list[i] + '</li>\n';
+        }
     }
     
     playlistWindow.webContents.send('setList',listContent);

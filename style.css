@@ -17,6 +17,7 @@ body
 	color:white;
 	margin: 0;
 	padding:0;
+	-webkit-app-region: drag;
 }
 
 a
@@ -47,10 +48,13 @@ a
 
 #titlebar
 {
+	position:absolute;
 	top: 0;
 	height:20px;
+	width: 100%;
 	overflow:hidden;
 	text-align:center;
+	-webkit-app-region: no-drag;
 }
 
 #controlsbar
@@ -78,12 +82,14 @@ a
 .slider-background {
 	background-color: gray;
     height: 20px;
+	box-shadow: 0px 0px 21px 8px gray;
 }
 
 .slider-inside {
 	background-color: blue;
     height: 20px;
     width: 0px;
+	box-shadow: 0px 0px 21px 8px rgba(0,0,255,1);
 }
 
 ol, ul {
@@ -95,6 +101,7 @@ ul li {
 	font-family: Arial;
 	font-size: 12px;
 	color: white;
+	cursor:pointer;
 }
 
 ul li:hover {
@@ -108,4 +115,12 @@ h3 {
 	margin: 0 auto;
 	width: auto;
 	text-transform:uppercase;
+}
+
+.playing {
+	background-color:#005500;
+}
+
+.clickable, ul {
+	-webkit-app-region: no-drag;
 }

@@ -22,6 +22,16 @@ let oldBgColor = "#000";
 let oldFont = "arial";
 let loadedSongName;
 
+function resetDisplay() {
+	displaySpeed = 100, hideSpeed = 100;
+	longFlashing = false;
+	fontFlashing = false;
+	oldBgColor = "#000";
+	oldFont = "arial";
+	hideLyric();
+	$("body").animate({"backgroundColor" : oldBgColor},50);
+}
+
 function displayLoadSongDialog(defaultPath) {
 	dialog.showOpenDialog(
 		null, 
@@ -51,9 +61,14 @@ function playSong(){
 }
 
 function loadSong(name) {
+	resetDisplay();
 	document.getElementById('music').src = name;
 	ipcRenderer.send('loadedSong',name);
+
 	var start = name.lastIndexOf('\\')+1;
+	if (start == 0)
+		start = name.lastIndexOf('/')+1;
+
 	var stop = name.lastIndexOf('.mp3');
 	loadedSongName = name.substr(start,stop);
 	lineRead = readline.createInterface({
@@ -91,7 +106,14 @@ class LyricsPlayer extends EventEmitter
 		this.eventsList = [];
 		this.splitLine =  [];
     	slider = new Slider();
-    	slider.init("#slider",$("#music").prop('duration'));
+    	slider.init(
+			"#slider",
+			$("#music").prop('duration')
+		);
+		$("#titlebar").click(function(e) {
+				var total = $("#music").prop("duration");
+				$("#music").prop('currentTime', parseInt(e.pageX / slider.getWidth() * total));
+			});
 
 	}
 
