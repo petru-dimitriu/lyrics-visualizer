@@ -22,6 +22,8 @@ let oldBgColor = "#000";
 let oldFont = "arial";
 let loadedSongName;
 
+let animationStyle = 'ROLL';
+
 function resetDisplay() {
 	displaySpeed = 100, hideSpeed = 100;
 	longFlashing = false;
@@ -32,19 +34,22 @@ function resetDisplay() {
 	$("body").animate({"backgroundColor" : oldBgColor},50);
 }
 
-function displayLoadSongDialog(defaultPath) {
+function displayLoadDirDialog(defaultPath) {
 	dialog.showOpenDialog(
-		null, 
-		{ 
-			'defaultPath' : defaultPath
+		null,
+		{
+			'defaultPath' : defaultPath,
+			'properties': ['openDirectory']
 		},
 		function(fileNames)
 		{
 			if (typeof fileNames === 'undefined')
 				return;
-			loadSong(fileNames[0]);
+			ipcRenderer.send('loadedDir',fileNames[0]);
 		}
 	);
+
+
 }
 
 function playSong(){
@@ -62,8 +67,7 @@ function playSong(){
 
 function loadSong(name) {
 	resetDisplay();
-	document.getElementById('music').src = name;
-	ipcRenderer.send('loadedSong',name);
+	$('#music').prop('src',name);
 
 	var start = name.lastIndexOf('\\')+1;
 	if (start == 0)
@@ -99,10 +103,10 @@ class LyricsPlayer extends EventEmitter
 			return Date.now() / 1000 - this.startTime;
 		}
 	}
-	
+
 	init()
 	{
-		this.playing = false;
+		this.playingIntervalHandler = false;
 		this.eventsList = [];
 		this.splitLine =  [];
     	slider = new Slider();
@@ -110,27 +114,28 @@ class LyricsPlayer extends EventEmitter
 			"#slider",
 			$("#music").prop('duration')
 		);
-		$("#titlebar").click(function(e) {
+
+		$(".upperbar").click(function(e) {
 				var total = $("#music").prop("duration");
-				$("#music").prop('currentTime', parseInt(e.pageX / slider.getWidth() * total));
+				lyricsPlayer.seek (parseInt(e.pageX / slider.getWidth() * total));
 			});
 
 	}
 
-	play() 
+	play()
 	{
 	  $("#music").trigger('play');
 	  $("#titlebar").html(loadedSongName);
 	  this.startTime = Date.now() / 1000;
-	  this.i = 0;
+	  this.indexOfCurrentEvent = 0;
 	  var thisObj = this;
-	  this.playing = setInterval(function(){
+	  this.playingIntervalHandler = setInterval(function(){
 		  thisObj.check();
 	  },10);
 	  timeUpdate = setInterval(updateTime,500);
 	  displaySpeed = 100, hideSpeed = 100;
 	}
-	
+
 	pause()
 	{
 		$("#music").trigger('pause');
@@ -139,10 +144,10 @@ class LyricsPlayer extends EventEmitter
 	parseLine(line)
 	{
 		this.splitLine = line.split("|");
-		
+
 		if (this.eventsList === undefined)
 			this.eventsList = [];
-		
+
 		console.log(this.splitLine[1]);
 		if (['sds', 'shs', 'flash', 'blf', 'elf','bff','eff','belf','eelf','chl'].indexOf(this.splitLine[1]) >= 0){
 			this.eventsList.push(new LyricsEvent(this.splitLine[0],this.splitLine[1],this.splitLine[2]));
@@ -153,18 +158,40 @@ class LyricsPlayer extends EventEmitter
 		}
 	}
 
-	check()
-	{	
-		console.log(this.i);
-		if ($("#music").prop('currentTime') > this.eventsList[this.i].time)
-		{
-			this.emit(this.eventsList[this.i].type,this.eventsList[this.i].text);
-			this.i++;
+	seek(newTime) {
+		var lastEventType;
+		$("#music").prop('currentTime', newTime);
+		resetDisplay();
+		this.indexOfCurrentEvent = 0;
+		while (this.indexOfCurrentEvent < this.eventsList.length-1 && this.eventsList[this.indexOfCurrentEvent+1].time < newTime) {
+			lastEventType = this.eventsList[this.indexOfCurrentEvent].type;
+
+			if (this.eventsList[this.indexOfCurrentEvent].type == 'sds') {
+				setDisplaySpeed(this.eventsList[this.indexOfCurrentEvent].text);
+			}
+			else if (this.eventsList[this.indexOfCurrentEvent].type == 'shs') {
+				setHideSpeed(this.eventsList[this.indexOfCurrentEvent].text);
+			}
+
+			this.indexOfCurrentEvent ++;
 		}
-		if (this.i >= this.eventsList.length)
-			clearInterval(this.playing);
+
+		if (lastEventType.charAt(0) == 'b')
+			this.emit(lastEventType);
 	}
-	
+
+	check()
+	{
+		console.log(this.indexOfCurrentEvent);
+		if ($("#music").prop('currentTime') > this.eventsList[this.indexOfCurrentEvent].time)
+		{
+			this.emit(this.eventsList[this.indexOfCurrentEvent].type,this.eventsList[this.indexOfCurrentEvent].text);
+			this.indexOfCurrentEvent++;
+		}
+		if (this.indexOfCurrentEvent >= this.eventsList.length)
+			clearInterval(this.playingIntervalHandler);
+	}
+
 	sortEvents()
 	{
 		this.eventsList.sort(function (a,b) {
@@ -198,27 +225,25 @@ ipcRenderer.on('loadSong', function(evt,songName) {
 	});
 
 function changeLyric(text){
-	if (text == '')
+	if (text.trim() == '') {
 		hideLyric();
+	}
 	else if ($("#currentLyric").html() == '')
 		displayLyric(text);
 	else {
-		$("#currentLyric").animate({opacity:0},100,
-			function(){
-				$('#currentLyric').html(text);
-				$("#currentLyric").animate({opacity:1},100);
-			});
+		animateChange(text);
 	}
-		
+
 }
 
 function displayLyric(text){
 	$('#currentLyric').html(text);
-	$("#currentLyric").animate({opacity:1},displaySpeed);
+	animateIn();
+
 }
 
 function hideLyric(text){
-	$("#currentLyric").animate({opacity:0},hideSpeed);
+	animateOut();
 }
 
 function setDisplaySpeed(speed){
@@ -300,4 +325,45 @@ function getRandomColor() {
 function getRandomFont(){
 	var fonts = ['arial', 'tahoma', 'comic sans', 'courier new', 'impact','serif','lucida console','gentium'];
 	return fonts[Math.floor(Math.random()*7)];
+}
+
+
+function animateIn() {
+	if (animationStyle == 'FADE')
+		$("#currentLyric").animate({opacity:1},displaySpeed);
+	else if (animationStyle == 'ROLL') {
+		$("#currentLyric").css('top','100vh');
+		$("#currentLyric").animate({top: '30vh'},displaySpeed);
+	}
+
+}
+
+function animateOut() {
+	if (animationStyle == 'FADE')
+		$("#currentLyric").animate({opacity:0},hideSpeed,emptyLyricText);
+	else if (animationStyle == 'ROLL') {
+			$("#currentLyric").animate({top: '-30vh'},hideSpeed,emptyLyricText);
+		}
+}
+
+function animateChange (text) {
+	if (animationStyle == 'FADE') {
+		$("#currentLyric").animate({opacity:0},100,
+			function(){
+				$('#currentLyric').html(text);
+				$("#currentLyric").animate({opacity:1},100);
+			});
+	}
+	else if (animationStyle == 'ROLL') {
+		$("#currentLyric").animate({top:'-30vh'},70,
+			function(){
+				$('#currentLyric').html(text);
+				$("#currentLyric").css('top','100vh');
+				$("#currentLyric").animate({top:'30vh',opacity:1},70);
+			});
+	}
+}
+
+function emptyLyricText () {
+	$("#currentLyric").html('');
 }

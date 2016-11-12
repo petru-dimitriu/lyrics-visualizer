@@ -7,8 +7,17 @@
   <script>
   function initPage()
   {
-	  $("body").on('mouseleave',function(){console.log("over"); $(".upperbar").animate({opacity:0},100);});	
-	  $("body").on('mouseenter',function(){console.log("out"); $(".upperbar").animate({opacity:1},100);});
+	  $("#body").on('mouseleave',function(){$(".upperbar").animate({top:'-10px', opacity:0},150);});
+	  $("#body").on('mouseenter',function(){$(".upperbar").animate({top: '0px', opacity:1},150);});
+    $(".upperbar").on('mouseenter',function() {
+        $('.slider-inside').css('backgroundColor','purple');
+        $('.slider-inside').css('box-shadow', '0px 0px 21px 8px purple');
+      });
+    $(".upperbar").on('mouseleave',function() {
+        $('.slider-inside').css('backgroundColor','blue');
+        $('.slider-inside').css('box-shadow', '0px 0px 21px 8px rgba(0,0,255,1)');
+      });
+
       slider = new Slider();
       slider.init("#slider",0);
   }
@@ -18,18 +27,20 @@
   <audio id = "music">
   Error loading audio!
   </audio>
-  
+
   <div class="upperbar">
       <div id="slider" style="width:100%; height:20px"></div>
 	  <p id="titlebar" style="font-size:90%;">Lyrics Visualizer</p>
 	  <div id="controlsbar">
-	  <a href="javascript:displayLoadSongDialog(__dirname + '');">Open</a>
-	  <a id="playButton" href="javascript:playSong();">Play</a>
-	  </div>
+    <div id = "time" style="float:right;" id="time"></div>
   </div>
-  
-  <div class="upperbar" style="float:right;" id="time"></div>
-  
+</div>
+
+  <div class="lowerbar">
+    <a href="javascript:displayLoadDirDialog(__dirname + '');">Open</a>
+    <a id="playButton" href="javascript:playSong();">Play</a>
+  </div>
+
     <p id="currentLyric"></p>
 </body>
 </html>

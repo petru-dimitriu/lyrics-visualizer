@@ -37,11 +37,11 @@ function createWindow () {
   playListHtmlContent += "<script src='playlist.js'></script>" + "</body></html>";
   fs.writeFileSync(__dirname + "/playlist.html",playListHtmlContent);
   playlistWindow.loadURL('file://' + __dirname + '/playlist.html');
-  
-  ipcMain.on('loadedSong', (event, arg) => {
-      var path = arg.substr(0,arg.lastIndexOf('/'));
+
+  ipcMain.on('loadedDir', (event, arg) => {
       currentSongName = arg.substr(arg.lastIndexOf('/')+1);
-      createPlaylistWindow(path);
+      console.log(arg);
+      createPlaylistWindow(arg);
   });
 
   ipcMain.on('loadSongFromPlaylist', (event, arg) => {
@@ -69,11 +69,11 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
   }
-    
+
 });
 
 function createPlaylistWindow (arg) {
-    
+
     var list = fs.readdirSync(arg);
 
     var listContent = "";
@@ -85,9 +85,8 @@ function createPlaylistWindow (arg) {
                 listContent += '<li>' + list[i] + '</li>\n';
         }
     }
-    
+
     playlistWindow.webContents.send('setList',listContent);
     playlistWindow.webContents.send('setTitle',arg);
     playlistWindow.show();
 }
-

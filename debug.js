@@ -38,10 +38,10 @@ function createWindow () {
   fs.writeFileSync(__dirname + "/playlist.html",playListHtmlContent);
   playlistWindow.loadURL('file://' + __dirname + '/playlist.html');
   
-  ipcMain.on('loadedSong', (event, arg) => {
-      var path = arg.substr(0,arg.lastIndexOf('/'));
+  ipcMain.on('loadedDir', (event, arg) => {
       currentSongName = arg.substr(arg.lastIndexOf('/')+1);
-      createPlaylistWindow(path);
+      console.log(arg);
+      createPlaylistWindow(arg);   
   });
 
   ipcMain.on('loadSongFromPlaylist', (event, arg) => {
