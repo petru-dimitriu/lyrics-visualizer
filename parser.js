@@ -22,7 +22,7 @@ let oldBgColor = "#000";
 let oldFont = "arial";
 let loadedSongName;
 
-let animationStyle = 'ROLL';
+let animationStyle = 'FADE';
 
 function resetDisplay() {
 	displaySpeed = 100, hideSpeed = 100;
@@ -176,13 +176,12 @@ class LyricsPlayer extends EventEmitter
 			this.indexOfCurrentEvent ++;
 		}
 
-		if (lastEventType.charAt(0) == 'b')
+		if (lastEventType !== undefined && lastEventType.charAt(0) == 'b')
 			this.emit(lastEventType);
 	}
 
 	check()
 	{
-		console.log(this.indexOfCurrentEvent);
 		if ($("#music").prop('currentTime') > this.eventsList[this.indexOfCurrentEvent].time)
 		{
 			this.emit(this.eventsList[this.indexOfCurrentEvent].type,this.eventsList[this.indexOfCurrentEvent].text);
