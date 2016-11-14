@@ -8,10 +8,8 @@ const EventEmitter = require('events');
 const {ipcRenderer} = require('electron')
 window.$ = window.jQuery = require('jquery');
 require('jquery-ui');
-require('bootstrap');
-let bootstrapSlider = require('bootstrap-slider');
-var remote = require('remote');
-var dialog = remote.require('dialog');
+var remote = require('electron').remote;
+const {dialog} = require('electron').remote;
 
 var displaySpeed = 100, hideSpeed = 100;
 let lineRead;
