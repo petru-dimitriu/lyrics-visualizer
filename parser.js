@@ -130,7 +130,7 @@ class LyricsPlayer extends EventEmitter
 	  this.playingIntervalHandler = setInterval(function(){
 		  thisObj.check();
 	  },10);
-	  timeUpdate = setInterval(updateTime,500);
+	  timeUpdate = setInterval(updateTime,50);
 	  displaySpeed = 100, hideSpeed = 100;
 	}
 
@@ -308,6 +308,7 @@ function updateTime(){
 	var secs = Math.floor(time % 60);
 	$("#time").html((mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs);
 	slider.setValue(time,total);
+	visualizeAudio();
 }
 
 function getRandomColor() {
