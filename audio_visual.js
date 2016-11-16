@@ -22,11 +22,11 @@ function visualizeAudio () {
     var dataArray = new Float32Array(bufferLength);
     analyser.getFloatFrequencyData(dataArray);
     var avg = 0;
-    for (var i=0;i<bufferLength/2;i++)
-        avg += dataArray[i]/(bufferLength/2);
+    for (var i=0;i<2;i++)
+        avg += dataArray[i]/(2);
     avg += 140;
     $("#titlebar").html(Math.floor(avg));
-    var beatChangeAux = (avg-75)/20;
+    var beatChangeAux = (avg-95)/25;
     if (beatChangeAux < 0.3)
         beatChangeAux = 0;
     var beatChange = Math.floor(beatChangeAux * 200);
