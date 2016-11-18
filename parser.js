@@ -35,6 +35,10 @@ function resetDisplay() {
   $('body').animate({ backgroundColor: oldBgColor }, 50);
 }
 
+function canVisualize() {
+  return !longFlashing;
+}
+
 function displayLoadDirDialog(defaultPath) {
   dialog.showOpenDialog(
  null,
@@ -290,7 +294,9 @@ function updateTime() {
   const secs = Math.floor(time % 60);
   $('#time').html(`${(mins < 10 ? '0' : '') + mins}:${secs < 10 ? '0' : ''}${secs}`);
   slider.setValue(time, total);
-  visualizeAudio();
+  if (canVisualize() === true) {
+    visualizeAudio();
+  }
 }
 
 function getRandomColor() {

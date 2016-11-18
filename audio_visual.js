@@ -1,3 +1,9 @@
+/* eslint-env node, jquery, browser */
+
+let audioContext;
+let mediaSource;
+let audioSource;
+let analyser;
 
 function initAudioVisualization() {
   audioContext = new window.AudioContext();
@@ -22,11 +28,10 @@ function visualizeAudio() {
   const dataArray = new Float32Array(bufferLength);
   analyser.getFloatFrequencyData(dataArray);
   let avg = 0;
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 2; i += 1) {
     avg += dataArray[i] / (2);
   }
   avg += 140;
-  $('#titlebar').html(Math.floor(avg));
   let beatChangeAux = (avg - 95) / 25;
   if (beatChangeAux < 0.3) {
     beatChangeAux = 0;
