@@ -1,4 +1,5 @@
-
+/* eslint-env node, jquery, browser */
+/* global slider */
 
 // REQUIRES
 
@@ -11,12 +12,12 @@ require('jquery-ui');
 const remote = require('electron').remote;
 const { dialog } = require('electron').remote;
 
-let displaySpeed = 100,
-  hideSpeed = 100;
+let displaySpeed = 100;
+let hideSpeed = 100;
 let lineRead;
 let timeUpdate;
-let longFlashing = false,
-  fontFlashing = false;
+let longFlashing = false;
+let fontFlashing = false;
 let oldBgColor = '#000';
 let oldFont = 'arial';
 let loadedSongName;
@@ -24,7 +25,8 @@ let loadedSongName;
 const animationStyle = 'FADE';
 
 function resetDisplay() {
-  displaySpeed = 100, hideSpeed = 100;
+  displaySpeed = 100;
+  hideSpeed = 100;
   longFlashing = false;
   fontFlashing = false;
   oldBgColor = '#000';
@@ -35,18 +37,17 @@ function resetDisplay() {
 
 function displayLoadDirDialog(defaultPath) {
   dialog.showOpenDialog(
-		null,
+ null,
     {
       defaultPath,
       properties: ['openDirectory'],
     },
-		(fileNames) => {
-  if (typeof fileNames === 'undefined')				{
-    return;
-  }
-  ipcRenderer.send('loadedDir', fileNames[0]);
-},
-	);
+ (fileNames) => {
+   if (typeof fileNames === 'undefined') {
+     return;
+   }
+   ipcRenderer.send('loadedDir', fileNames[0]);
+ });
 }
 
 function playSong() {
@@ -66,20 +67,20 @@ function loadSong(name) {
   $('#music').prop('src', name);
 
   let start = name.lastIndexOf('\\') + 1;
-  if (start == 0)		{
+  if (start === 0) {
     start = name.lastIndexOf('/') + 1;
   }
 
   const stop = name.lastIndexOf('.mp3');
   loadedSongName = name.substr(start, stop);
   lineRead = readline.createInterface({
- 			 input: fs.createReadStream(`${name.substr(0, name.lastIndexOf('.mp3'))}.srt`, { encoding: 'utf8' }),
+    input: fs.createReadStream(`${name.substr(0, name.lastIndexOf('.mp3'))}.srt`, { encoding: 'utf8' }),
   });
-  	// TO DO: Find more elegant alternative to using bind!
+ // TO DO: Find more elegant alternative to using bind!
   lineRead.on('line', lyricsPlayer.parseLine.bind(lyricsPlayer));
-  	lineRead.on('close', lyricsPlayer.sortEvents.bind(lyricsPlayer));
-  	lyricsPlayer.init();
-  	displaySpeed = 100, hideSpeed = 100;
+  lineRead.on('close', lyricsPlayer.sortEvents.bind(lyricsPlayer));
+  lyricsPlayer.init();
+  displaySpeed = 100, hideSpeed = 100;
 }
 
 function LyricsEvent(time, type, text, options) {
@@ -91,23 +92,20 @@ function LyricsEvent(time, type, text, options) {
 
 class LyricsPlayer extends EventEmitter
 {
-  constructor()	{
+  constructor() {
     super();
     this.startTime = 0;
-    this.currentTime = function ()		{
+    this.currentTime = function () {
       return Date.now() / 1000 - this.startTime;
     };
   }
 
-  init()	{
+  init() {
     this.playingIntervalHandler = false;
     this.eventsList = [];
     this.splitLine = [];
-    	slider = new Slider();
-    	slider.init(
-			'#slider',
-			$('#music').prop('duration'),
-		);
+    const slider = new Slider();
+    slider.init('#slider', $('#music').prop('duration'));
 
     $('.upperbar').click((e) => {
       const total = $('#music').prop('duration');
@@ -115,24 +113,24 @@ class LyricsPlayer extends EventEmitter
     });
   }
 
-  play()	{
-	  $('#music').trigger('play');
-	  $('#titlebar').html(loadedSongName);
-	  this.startTime = Date.now() / 1000;
-	  this.indexOfCurrentEvent = 0;
-	  const thisObj = this;
-	  this.playingIntervalHandler = setInterval(() => {
-		  thisObj.check();
-	  }, 10);
-	  timeUpdate = setInterval(updateTime, 50);
-	  displaySpeed = 100, hideSpeed = 100;
+  play() {
+    $('#music').trigger('play');
+    $('#titlebar').html(loadedSongName);
+    this.startTime = Date.now() / 1000;
+    this.indexOfCurrentEvent = 0;
+    const thisObj = this;
+    this.playingIntervalHandler = setInterval(() => {
+      thisObj.check();
+    }, 10);
+    timeUpdate = setInterval(updateTime, 50);
+    displaySpeed = 100, hideSpeed = 100;
   }
 
-  pause()	{
+  pause() {
     $('#music').trigger('pause');
   }
 
-  parseLine(line)	{
+  parseLine(line) {
     this.splitLine = line.split('|');
 
     if (this.eventsList === undefined) {
@@ -156,33 +154,33 @@ class LyricsPlayer extends EventEmitter
     while (this.indexOfCurrentEvent < this.eventsList.length - 1 && this.eventsList[this.indexOfCurrentEvent + 1].time < newTime) {
       lastEventType = this.eventsList[this.indexOfCurrentEvent].type;
 
-      if (this.eventsList[this.indexOfCurrentEvent].type == 'sds') {
+      if (this.eventsList[this.indexOfCurrentEvent].type === 'sds') {
         setDisplaySpeed(this.eventsList[this.indexOfCurrentEvent].text);
-      } else if (this.eventsList[this.indexOfCurrentEvent].type == 'shs') {
+      } else if (this.eventsList[this.indexOfCurrentEvent].type === 'shs') {
         setHideSpeed(this.eventsList[this.indexOfCurrentEvent].text);
       }
 
       this.indexOfCurrentEvent ++;
     }
 
-    if (lastEventType !== undefined && lastEventType.charAt(0) == 'b')			{
+    if (lastEventType !== undefined && lastEventType.charAt(0) === 'b') {
       this.emit(lastEventType);
     }
   }
 
-  check()	{
-    if ($('#music').prop('currentTime') > this.eventsList[this.indexOfCurrentEvent].time)		{
+  check() {
+    if ($('#music').prop('currentTime') > this.eventsList[this.indexOfCurrentEvent].time) {
       this.emit(this.eventsList[this.indexOfCurrentEvent].type, this.eventsList[this.indexOfCurrentEvent].text);
       this.indexOfCurrentEvent++;
     }
-    if (this.indexOfCurrentEvent >= this.eventsList.length)			{ clearInterval(this.playingIntervalHandler); }
+    if (this.indexOfCurrentEvent >= this.eventsList.length) { clearInterval(this.playingIntervalHandler); }
   }
 
-  sortEvents()	{
+  sortEvents() {
     this.eventsList.sort((a, b) => {
       a.time = parseFloat(`${a.time}`);
       b.time = parseFloat(`${b.time}`);
-      if (a.time == 0 || b.time == 0)				{
+      if (a.time === 0 || b.time === 0) {
         return 0;
       }
       return (a.time - b.time);
@@ -211,9 +209,9 @@ ipcRenderer.on('loadSong', (evt, songName) => {
 });
 
 function changeLyric(text) {
-  if (text.trim() == '') {
+  if (text.trim() === '') {
     hideLyric();
-  } else if ($('#currentLyric').html() == '')		{ displayLyric(text); } else {
+  } else if ($('#currentLyric').html() === '') { displayLyric(text); } else {
     animateChange(text);
   }
 }
@@ -237,7 +235,7 @@ function setHideSpeed(speed) {
 
 function flash(color) {
   const oldColor = $('body').css('backgroundColor');
-  if (color == 'rand') {
+  if (color === 'rand') {
     color = getRandomColor();
   }
   $('body').animate({ backgroundColor: color }, 200, () => {
@@ -246,7 +244,7 @@ function flash(color) {
 }
 
 function longFlash() {
-  if (longFlashing == false) {
+  if (longFlashing === false) {
     $('body').css('backgroundColor', oldBgColor);
     return;
   }
@@ -265,7 +263,7 @@ function endLongFlash() {
 }
 
 function fontFlash() {
-  if (fontFlashing == false)	{
+  if (fontFlashing === false) {
     $('#currentLyric').css('fontFamily', oldFont);
     return;
   }
@@ -283,7 +281,7 @@ function endFontFlash() {
 }
 
 function updateTime() {
-  if ($('#music').prop('ended') == true) {
+  if ($('#music').prop('ended') === true) {
     clearInterval(timeUpdate);
   }
   const time = $('#music').prop('currentTime');
@@ -311,34 +309,34 @@ function getRandomFont() {
 
 
 function animateIn() {
-  if (animationStyle == 'FADE')		{ $('#currentLyric').animate({ opacity: 1 }, displaySpeed); } else if (animationStyle == 'ROLL') {
+  if (animationStyle === 'FADE') { $('#currentLyric').animate({ opacity: 1 }, displaySpeed); } else if (animationStyle === 'ROLL') {
     $('#currentLyric').css('top', '100vh');
     $('#currentLyric').animate({ top: '30vh' }, displaySpeed);
   }
 }
 
 function animateOut() {
-  if (animationStyle == 'FADE')		{
+  if (animationStyle === 'FADE') {
     $('#currentLyric').animate({ opacity: 0 }, hideSpeed, emptyLyricText);
-  } else if (animationStyle == 'ROLL') {
+  } else if (animationStyle === 'ROLL') {
     $('#currentLyric').animate({ top: '-30vh' }, hideSpeed, emptyLyricText);
   }
 }
 
 function animateChange(text) {
-  if (animationStyle == 'FADE') {
+  if (animationStyle === 'FADE') {
     $('#currentLyric').animate({ opacity: 0 }, 100,
-			() => {
-  $('#currentLyric').html(text);
-  $('#currentLyric').animate({ opacity: 1 }, 100);
-});
-  } else if (animationStyle == 'ROLL') {
+ () => {
+   $('#currentLyric').html(text);
+   $('#currentLyric').animate({ opacity: 1 }, 100);
+ });
+  } else if (animationStyle === 'ROLL') {
     $('#currentLyric').animate({ top: '-30vh' }, 70,
-			() => {
-  $('#currentLyric').html(text);
-  $('#currentLyric').css('top', '100vh');
-  $('#currentLyric').animate({ top: '30vh', opacity: 1 }, 70);
-});
+ () => {
+   $('#currentLyric').html(text);
+   $('#currentLyric').css('top', '100vh');
+   $('#currentLyric').animate({ top: '30vh', opacity: 1 }, 70);
+ });
   }
 }
 

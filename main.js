@@ -1,4 +1,4 @@
-
+/* eslint-env node, jquery, browser */
 
 const electron = require('electron');
 // Module to control application life.
@@ -12,10 +12,9 @@ const BrowserWindow = electron.BrowserWindow;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow,
-  mainWindow2,
-  playlistWindow,
-  currentSongName;
+let mainWindow;
+let playlistWindow;
+let currentSongName;
 
 function createWindow() {
   // Create the browser window.
@@ -76,9 +75,9 @@ function createPlaylistWindow(arg) {
   const list = fs.readdirSync(arg);
 
   let listContent = '';
-  for (let i = 0; i < list.length; i++) {
+  for (let i = 0; i < list.length; i += 1) {
     if (list[i].lastIndexOf('.mp3') >= 0) {
-      if (list[i].indexOf(currentSongName) != -1) {
+      if (list[i].indexOf(currentSongName) !== -1) {
         listContent += `<li class="playing">${list[i]}</li>\n`;
       } else {
         listContent += `<li>${list[i]}</li>\n`;
