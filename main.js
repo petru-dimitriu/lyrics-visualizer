@@ -18,10 +18,12 @@ let currentSongName;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 800, height: 100, frame: false });
+  mainWindow = new BrowserWindow({ width: 800, height: 100, frame: false, alwaysOnTop: true });
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
+
+  mainWindow.setAlwaysOnTop(true);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -48,6 +50,7 @@ function createWindow() {
   ipcMain.on('loadSongFromPlaylist', (event, arg) => {
     mainWindow.webContents.send('loadSong', arg.toString());
   });
+
 }
 
 // This method will be called when Electron has finished
