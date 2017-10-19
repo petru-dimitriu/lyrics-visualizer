@@ -78,7 +78,7 @@ a
 
 .lowerbar
 {
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     -webkit-app-region: no-drag;
 }

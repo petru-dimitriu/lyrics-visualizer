@@ -8,8 +8,8 @@
   <script>
   function initPage()
   {
-	  $("#body").on('mouseleave',function(){$(".upperbar").animate({top:'-10px', opacity:0},150);});
-	  $("#body").on('mouseenter',function(){$(".upperbar").animate({top: '0px', opacity:1},150);});
+	  $("body").on('mouseleave',function(){$(".upperbar").animate({top:'-10px', opacity:0},150);});
+	  $("body").on('mouseenter',function(){$(".upperbar").animate({top: '0px', opacity:1},150);});
     $(".upperbar").on('mouseenter',function() {
         $('.slider-inside').css('backgroundColor','purple');
         $('.slider-inside').css('box-shadow', '0px 0px 21px 8px purple');
