@@ -1,4 +1,4 @@
-#Music lyrics visualizer built around Electron
+# Music lyrics visualizer built around Electron
 
 **Work in progress**.
 
