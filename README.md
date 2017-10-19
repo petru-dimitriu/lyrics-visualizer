@@ -25,7 +25,7 @@ Planned:
 * animation directly linked to song beats, frequency, etc
 
 ## Screen capture
-![Capture](https://raw.githubusercontent.com/petru-dimitriu/lyrics-visualizer/master/capture.gif)
+![Capture](https://raw.githubusercontent.com/petru-dimitriu/lyrics-visualizer/master/screenshot.gif)
 
 ## Licence
 BSD. No warranties for anything.
